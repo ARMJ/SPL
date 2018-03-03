@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace AuthenticationAPI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [RoutePrefix("api/roles")]
     public class RolesController : BaseApiController
     {
@@ -37,6 +37,7 @@ namespace AuthenticationAPI.Controllers
             return Ok(roles);
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("create")]
         public async Task<IHttpActionResult> Create(CreateRoleBindingModel model)
         {
@@ -59,7 +60,7 @@ namespace AuthenticationAPI.Controllers
             return Created(locationHeader, TheModelFactory.Create(role));
 
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("{id:guid}")]
         public async Task<IHttpActionResult> DeleteRole(string Id)
         {
@@ -81,7 +82,7 @@ namespace AuthenticationAPI.Controllers
             return NotFound();
 
         }
-
+        [Authorize(Roles = "Admin")]
         [Route("ManageUsersInRole")]
         public async Task<IHttpActionResult> ManageUsersInRole(UsersInRoleModel model)
         {

@@ -22,7 +22,7 @@ namespace AuthenticationAPI.Services
         {
             var emailMessage = new MailMessage();
             emailMessage.To.Add(message.Destination);
-            emailMessage.From = new MailAddress("misusurvey@gmail.com", "MisuBeImp");
+            emailMessage.From = new MailAddress("iit.splms@hotmail.com", "Software Project Lab");
             emailMessage.Subject = message.Subject;
             emailMessage.Body = message.Body;
             emailMessage.IsBodyHtml = true;

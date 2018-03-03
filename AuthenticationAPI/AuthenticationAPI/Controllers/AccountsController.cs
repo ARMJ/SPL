@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using AuthenticationAPI.Entities;
 
 namespace AuthenticationAPI.Controllers
 {
@@ -18,14 +19,14 @@ namespace AuthenticationAPI.Controllers
     public class AccountsController : BaseApiController
     {
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
             return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUser(string Id)
         {
@@ -40,11 +41,32 @@ namespace AuthenticationAPI.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Route("user/student/{id}", Name = "GetStudentById")]
+        public IQueryable<Student> GetStudentById(string id)
+        {
+            return from student in dbContext.Students where student.Id == id select student;
+
+        }
+
+        //[Authorize]
         [Route("user/{username}")]
-        public async Task<IHttpActionResult> GetUserByName(string username)
+        public async Task<IHttpActionResult> GetUserByName([FromUri] string username)
         {
             var user = await this.AppUserManager.FindByNameAsync(username);
+
+            if (user != null)
+            {
+                return Ok(this.TheModelFactory.Create(user));
+            }
+
+            return NotFound();
+
+        }
+
+        [Route("user/roles/{role}")]
+        public async Task<IHttpActionResult> GetUserByRole([FromUri]string role)
+        {
+            var user = dbContext.Users.FirstOrDefault(u => u.UserRole == role);
 
             if (user != null)
             {
@@ -101,7 +123,7 @@ namespace AuthenticationAPI.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("user/{id:guid}/roles")]
         [HttpPut]
         public async Task<IHttpActionResult> AssignRolesToUser([FromUri] string id, [FromBody] string[] rolesToAssign)
@@ -144,7 +166,7 @@ namespace AuthenticationAPI.Controllers
             return Ok();
         }
 
-
+        ApplicationDbContext dbContext = new ApplicationDbContext();
         [Route("create")]
         public async Task<IHttpActionResult> CreateUser(CreateUserBindingModel createUserModel)
         {
@@ -163,7 +185,7 @@ namespace AuthenticationAPI.Controllers
                 EmailConfirmed = true
             };
 
-            IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
+            var addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
 
             if (!addUserResult.Succeeded)
             {
@@ -178,6 +200,26 @@ namespace AuthenticationAPI.Controllers
             //await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
+
+            if (user.UserRole == "Teacher")
+            {
+                dbContext.Teachers.Add(new Teacher()
+                {
+                    Id = user.Id,
+                    Designation = createUserModel.Designation
+                });
+                dbContext.SaveChanges();
+            }
+            else if(user.UserRole == "Student")
+            {
+                dbContext.Students.Add(new Student()
+                {
+                    Id = user.Id,
+                    RollNo = createUserModel.Roll,
+                    Batch = createUserModel.Batch
+                });
+                dbContext.SaveChanges();
+            }
 
             return Created(locationHeader, TheModelFactory.Create(user));
 

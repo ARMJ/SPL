@@ -53,8 +53,8 @@
                 <li id="uploadDocLinkItem"><a href="#" id="uploadDocLink">Upload Document</a></li>
                 <li id="groupsLinkItem"><a href="#" id="groupsLink">Groups</a></li>
                 <li id="createGroupLinkItem"><a href="#" id="createGroupLink">Create Group</a></li>
-                <li id="academicCalLinkItem"><a href="#" id="academicCalLink">Academic Calendar</a></li>
-                <li id="changeRuleLinkItem"><a href="#" id="changeRuleLink">Change Rules</a></li>
+                <li id="academicCalLinkItem"><a href="#" id="academicCalLink">Calendar &amp; Rules</a></li>
+                <li id="feedbackLinkItem"><a href="#" id="feedbackLink">Feedback</a></li>
                 <li><a href="index.html" id="btnLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
@@ -68,148 +68,199 @@
             <div class="intro-text" id="headerDiv">
                 <div class="intro-heading">WELCOME TO</div>
                 <div class="intro-lead-in">SOFTWATE PROJECT LAB MANAGEMENT SYSTEM</div>
-                <table class="table table-bordered hidden">
-                    <thead class="success">
-                    <tr>
-                        <td>Notifiactions</td>
-                    </tr>
-                    </thead>
-                </table>
+                
             </div>
             <div class="intro-text hidden" id="uploadDocDiv">
-                <div class="container text-center text-success"> 
+                <div class="container text-center">
                     <table class="table table-bordered">
                         <tbody>
-                            <tr>
-                                <td>Document Category</td>
-                                <td>
-                                    <form>
-                                        <select name="docCategory">
-                                            <option selected="selected">Mark Sheet</option>
-                                        </select>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Choose file</td>
-                                <td><button class="btn btn-success btn-lg" value="Browse">Browse</button></td>
-                            </tr>
+                        <tr bgcolor="#404040">
+                            <td>Document Category</td>
+                            <td>
+                                <form style="color: black">
+                                    <select name="docCategory">
+                                        <option selected="selected">Mark Sheet</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#666666">
+                            <td>Choose file</td>
+                            <td align="center"><input type="file" class="btn btn-success btn-lg" value="Browse" id="uploadFile"/></td>
+                        </tr>
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td colspan="2"><button class="btn btn-success btn-lg" value="Upload">Upload</button></td>
-                            </tr>
+                        <tr bgcolor="#666666">
+                            <td colspan="2"><button class="btn btn-success btn-lg" value="Upload" id="uploadFileBtn">Upload</button></td>
+                        </tr>
                         </tfoot>
                     </table>
+                    <div class="modal fade" tabindex="-1" id="successModal"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="success">Success</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h2>File Upload Successfull</h2>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" data-dismiss="modal" type="button" href="#">Close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div id="divErrorFileUpload" class="alert alert-danger collapse">
+                    <a id="linkCloseFileUpload" class="close">&times;</a>
+                    <div id="divErrorTextFileUpload"></div>
                 </div>
             </div>
             <div class="intro-text hidden" id="groupsDiv">
                 <div>
-                    <table class="table table-bordered text-success">
-                        <thead>
-                        <tr class="success">
-                            <th>Group Name</th>
-                            <th>Project</th>
-                            <th>Supervisor</th>
+                    <table class="table table-bordered" id="tblData">
+                        <thead bgcolor="#404040">
+                        <tr>
+                            <td>Group Name</td>
+                            <td>Course Code</td>
+                            <td>Project</td>
+                            <td>Supervisor</td>
+                            <td>Year</td>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th>Arjon</th>
-                            <th>SPL Management System</th>
-                            <th>Rayhanur Rahman</th>
-                        </tr>
-                        <tr>
-                            <th>Skylark</th>
-                            <th>Showrolipi</th>
-                            <th>Dr. Zerina Bugum</th>
-                        </tr>
-                        </tbody>
+                        <tbody id="tblBody"></tbody>
                     </table>
                 </div>
             </div>
-            <div class="intro-text hidden" id="createGroupDiv">   
-                <div class="row content text-success">
+            <div class="intro-text hidden" id="createGroupDiv">
+                <div class="row content">
                     <table class="table table-bordered">
-                        <thead>
-                        <tr class="success">
+                        <thead bgcolor="#404040">
+                        <tr>
                             <td>Group Name</td>
-                            <td>Group Topic</td>
+                            <td>Course Code</td>
+                            <td>Project Topic</td>
                             <td>Supervisor</td>
+                            <td>Year</td>
                             <td>Students</td>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody bgcolor="#666666" style="color: black">
                         <tr>
-                            <td><form><input type="text" name="groupName" /></form></td>
-                            <td><form><input type="text" name="groupTopic"/></form></td>
-                            <td><form><input type="text" name="supervisor"/></form></td>
-                            <td><form><input type="text" /></form><form><input type="text" /></form><form><input type="text" /></form></td>
+                            <td><form><input type="text" id="groupName"/></form></td>
+                            <td><form><input type="text" id="courseCode" /></form></td>
+                            <td><form><input type="text" id="projectTopic"/></form></td>
+                            <td><form><input type="text" id="supervisor"/></form></td>
+                            <td><form><input type="number" id="year" /></form></td>
+                            <td><form><input type="text" id="std1"/></form><form><input type="text" id="std2"/></form></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr bgcolor="#666666">
+                            <td colspan="6" class="text-center"><button class="btn btn-lg btn-success" id="createGroup">Create</button></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="intro-text hidden" id="feedbackDiv">
+                <div class="row content">
+                    <table class="table table-bordered" id="feedbackTableData">
+                        <thead bgcolor="#404040">
+                        <tr>
+                            <td>Group Id</td>
+                            <td>Teacher Id</td>
+                            <td>Feedbacks</td>
+                        </tr>
+                        </thead>
+                        <tbody bgcolor="#666666" style="color: black" id="feedbackTableBody">
+                            
+                        </tbody>
+                        
+                    </table>
+                    <table class="table table-bordered" bgcolor="#000">
+                        <thead>
+                        <tr>
+                            <td>Group Name</td>
+                            <td>Course Code</td>
+                            <td>Feedbacks</td>
+                        </tr>
+                        </thead>
+                        <tbody bgcolor="#666666" style="color: black">
+                        <tr>
+                            <td><form><input type="text" id="feedbackgroupName" /></form></td>
+                            <td><form><input type="text" id="feedbackCourseCode" /></form></td>
+                            <td><form>
+                                <textarea id="feedbacks"></textarea>
+                            </form></td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center"><button class="btn btn-lg btn-success" id="createGroup">Create</button></td>
+                            <td colspan="3"><button class="btn btn-success btn-lg" id="feedbackBtn">Give Feedback</button></td>
                         </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
             <div class="intro-text hidden success" id="academicCalDiv">
-                <div class="text-success">
+                <div>
                     <table class="table">
-                        <thead>
-                        <tr bgcolor="#ffad33">
-                            <td>Proposal Date</td>
-                            <td>Midterm Date</td>
-                            <td>Draft Report Submission</td>
-                            <td>Final Report Submission</td>
-                            <td>Final Presentation</td>
-                        </tr>
+                        <thead bgcolor="#404040">
+                            <tr>
+                                <td>Proposal Date</td>
+                                <td>Midterm Date</td>
+                                <td>Draft Report Submission</td>
+                                <td>Final Report Submission</td>
+                                <td>Final Presentation</td>
+                            </tr>
                         </thead>
-                        <tbody>
-                        <tr  bgcolor="#ffad33">
-                            <td><input type="date"/></td>
-                            <td><input type="date" /></td>
-                            <td><input type="date" /></td>
-                            <td><input type="date" /></td>
-                            <td><input type="date" /></td>
-                        </tr>
+                        <tbody bgcolor="#666666" style="color: black">
+                            <tr>
+                                <td><input type="datetime-local" id="proposalDate"/></td>
+                                <td><input type="datetime-local" id="midtermDate"/></td>
+                                <td><input type="datetime-local" id="draftDate"/></td>
+                                <td><input type="datetime-local" id="finalReportDate"/></td>
+                                <td><input type="datetime-local" id="finalDate"/></td>
+                            </tr>
+                            <tr bgcolor="#404040">
+                                <td style="color: white">No. of Student in each group</td>
+                                <td style="color: white" colspan="2">Maximum no. of groups one teacher can supervise</td>
+                                <td style="color: white">Course Code</td>
+                                <td style="color: white">Year</td>
+                            </tr>
+                            <tr>
+                                <td style="color: black"><input type="number" id="numOfStd"/></td>
+                                <td style="color: black" colspan="2"><input type="number" id="maxStd"/></td>
+                                <td style="color: black"><input type="text" id="courseCodeRule" /></td>
+                                <td style="color: black"><input type="number" id="ruleYear" /></td>
+                            </tr>
                         </tbody>
                         <tfoot>
-                        <tr bgcolor="#ffad33">
-                            <td colspan="6" class="text-center"><button class="btn btn-success" value="createAC">Create</button></td>
-                        </tr>
+                            <tr bgcolor="#666666">
+                                <td colspan="6"><button class="btn btn-success" id="createAC">Create</button></td>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>
-            </div>
-            <div class="intro-text hidden" id="changeRulesDiv">
-                <div class="text-success">
+                <div>
                     <table class="table table-bordered">
                         <thead>
-                        <tr>
-                            <td>No. of Student in each group</td>
-                            <td>Maximum no. of groups one teacher can supervise</td>
-                        </tr>
+
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="number"/></td>
-                            <td><input type="number" /></td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="2"><button class="btn btn-success" id="changingRules" value="Change">Change</button></td>
-                        </tr>
-                        </tfoot>
+                        <tbody bgcolor="#666666"></tbody>
+
                     </table>
                 </div>
             </div>
         </div>
-        
+
     </header>
+
 
     <footer>
         <div class="container">
@@ -220,7 +271,7 @@
             </div>
         </div>
     </footer>
-
+    
     <!-- Portfolio Modals -->
     <!-- Use the modals below to showcase details about your portfolio projects! -->
     <!-- jQuery -->
@@ -237,109 +288,8 @@
     <script src="js/contact_me.js"></script>
 
     <!-- Theme JavaScript -->
-<script src="js/agency.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        if (sessionStorage.getItem('accessToken') == null) {
-            window.location.href = "index.html";
-        }
-        $('#homeLink').on('click',
-            function() {
-                $('#headerDiv').removeClass('hidden');
-                $('#homeLinkItem').addClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#academicCalLinkItem').addClass('active');
-                $('#groupsDiv').addClass('hidden');
-                $('#createGroupDiv').addClass('hidden');
-                $('#changeRulesDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#createGroupLinkItem').removeClass('active');
-                $('#changeRuleLinkItem').removeClass('active');
-            });
-        $('#academicCalLink').on('click',
-            function() {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').removeClass('hidden');
-                $('#academicCalLinkItem').addClass('active');
-                $('#groupsDiv').addClass('hidden');
-                $('#createGroupDiv').addClass('hidden');
-                $('#changeRulesDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#createGroupLinkItem').removeClass('active');
-                $('#changeRuleLinkItem').removeClass('active');
-            });
-        $('#uploadDocLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').removeClass('hidden');
-                $('#uploadDocLinkItem').addClass('active');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').addClass('hidden');
-                $('#createGroupDiv').addClass('hidden');
-                $('#changeRulesDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#createGroupLinkItem').removeClass('active');
-                $('#changeRuleLinkItem').removeClass('active');
-            });
-        $('#groupsLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').removeClass('hidden');
-                $('#groupsLinkItem').addClass('active');
-                $('#createGroupDiv').addClass('hidden');
-                $('#changeRulesDiv').addClass('hidden');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#createGroupLinkItem').removeClass('active');
-                $('#changeRuleLinkItem').removeClass('active');
-            });
-        $('#createGroupLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').addClass('hidden');
-                $('#createGroupDiv').removeClass('hidden');
-                $('#createGroupLinkItem').addClass('active');
-                $('#changeRulesDiv').addClass('hidden');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#groupsLinkItem').removeClass('active');
-                $('#changeRuleLinkItem').removeClass('active');
-            });
-        $('#changeRuleLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').addClass('hidden');
-                $('#createGroupDiv').addClass('hidden');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#groupsLinkItem').removeClass('active');
-                $('#createGroupLinkItem').removeClass('active');
-                $('#changeRulesDiv').removeClass('hidden');
-                $('#changeRuleLinkItem').addClass('active');
-            });
-        $('#btnLogout').click(function() {
-            sessionStorage.removeItem('accessToken');
-            window.location.href = "index.html";
-        });
-    });
-</script>
+    <script src="js/agency.min.js"></script>
+    <script src="managerPage.js"></script>
 
 </body>
 

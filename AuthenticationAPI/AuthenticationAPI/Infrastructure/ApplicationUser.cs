@@ -18,6 +18,7 @@ namespace AuthenticationAPI.Infrastructure
         [Required]
         public DateTime JoinDate { get; set; }
 
+        [Required]
         public string UserRole { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)

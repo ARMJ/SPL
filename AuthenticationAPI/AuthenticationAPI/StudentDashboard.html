@@ -43,7 +43,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="StudentDashboard.html">SPLMS</a>
+                <a class="navbar-brand page-scroll" href="ManagerDashboard.html">SPLMS</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,9 +51,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active" id="homeLinkItem"><a href="#" id="homeLink">Home</a></li>
                     <li id="uploadDocLinkItem"><a href="#" id="uploadDocLink">Upload Document</a></li>
-                    <li id="mygroupLinkItem"><a href="#" id="mygroupLink">My Group</a></li>
+                    <li id="myGroupLinkItem"><a href="#" id="myGroupLink">My Group</a></li>
                     <li id="groupsLinkItem"><a href="#" id="groupsLink">Groups</a></li>
-                    <li id="academicCalLinkItem"><a href="#" id="academicCalLink">Academic Calendar</a></li>
+                    <li id="academicCalLinkItem"><a href="#" id="academicCalLink">Calendar</a></li>
                     <li><a href="index.html" id="btnLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </div>
@@ -67,99 +67,110 @@
             <div class="intro-text" id="headerDiv">
                 <div class="intro-heading">WELCOME TO</div>
                 <div class="intro-lead-in">SOFTWATE PROJECT LAB MANAGEMENT SYSTEM</div>
-                <table class="table table-bordered hidden">
-                    <thead class="success">
-                        <tr>
-                            <td>Notifiactions</td>
-                        </tr>
-                    </thead>
-                </table>
+
             </div>
             <div class="intro-text hidden" id="uploadDocDiv">
-                <div class="container text-center text-success">
+                <div class="container text-center">
                     <table class="table table-bordered">
                         <tbody>
-                        <tr>
-                            <td>Document Category</td>
-                            <td>
-                                <form>
-                                    <select name="docCategory">
-                                        <option>Document Category</option>
-                                        <option>Proposal</option>
-                                        <option>SRS Report</option>
-                                        <option>Draft Report</option>
-                                        <option>Final Report</option>
-                                    </select>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Choose file</td>
-                            <td><button class="btn btn-success btn-lg" value="Browse">Browse</button></td>
-                        </tr>
+                            <tr bgcolor="#404040">
+                                <td>Document Category</td>
+                                <td>
+                                    <form style="color: black">
+                                        <select name="docCategory" style="color: black">
+                                            <option>Document Category</option>
+                                            <option>Proposal</option>
+                                            <option>SRS Report</option>
+                                            <option>Draft Report</option>
+                                            <option>Final Report</option>
+                                        </select>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr bgcolor="#666666">
+                                <td>Choose file</td>
+                                <td align="center"><input type="file" class="btn btn-success btn-lg" value="Browse" id="uploadFile" /></td>
+                            </tr>
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <td colspan="2"><button class="btn btn-success btn-lg" value="Upload">Upload</button></td>
-                        </tr>
+                            <tr bgcolor="#666666">
+                                <td colspan="2"><button class="btn btn-success btn-lg" value="Upload" id="uploadFileBtn">Upload</button></td>
+                            </tr>
                         </tfoot>
                     </table>
+                    <div class="modal fade" tabindex="-1" id="successModal"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="success">Success</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h2>File Upload Successfull</h2>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-success" data-dismiss="modal" type="button" href="#">Close</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-            <div class="intro-text hidden" id="mygroupDiv">
-                <div class="container">
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr>
-                            <td>Group Name</td>
-                            <td id="groupNameCol"></td>
-                        </tr>
-                        <tr>
-                            <td>Project Topic</td>
-                            <td id="projectTopicCol"></td>
-                        </tr>
-                        <tr>   
-                            <td>Supervisor</td>
-                            <td id="supervisorCol"></td>
-                        </tr>
-                        <tr>
-                            <td>Feedbacks</td>
-                            <td id="feedbackCol"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div id="divErrorFileUpload" class="alert alert-danger collapse">
+                    <a id="linkCloseFileUpload" class="close">&times;</a>
+                    <div id="divErrorTextFileUpload"></div>
                 </div>
             </div>
             <div class="intro-text hidden" id="groupsDiv">
                 <div>
-                    <table class="table table-bordered text-success">
-                        <thead>
-                            <tr class="success">
-                                <th>Group Name</th>
-                                <th>Project</th>
-                                <th>Supervisor</th>
+                    <table class="table table-bordered" id="tblData">
+                        <thead bgcolor="#404040">
+                            <tr>
+                                <td>Group Name</td>
+                                <td>Course Code</td>
+                                <td>Project</td>
+                                <td>Supervisor</td>
+                                <td>Year</td>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="intro-text hidden" id="myGroupDiv">
+                <div class="row content">
+                    <table class="table table-bordered" id="myGroupTableData">
+                        <thead bgcolor="#404040">
                             <tr>
-                                <th>Arjon</th>
-                                <th>SPL Management System</th>
-                                <th>Rayhanur Rahman</th>
+                                <td>Group Name</td>
+                                <td>Project Topic</td>
+                                <td>Supervisor</td>
                             </tr>
+                        </thead>
+                        <tbody bgcolor="#666666" style="color: black" id="myGroupTableBody"></tbody>
+
+                    </table>
+                    <table class="table table-bordered" bgcolor="#000" id="feedbackTableData">
+                        <thead>
                             <tr>
-                                <th>Skylark</th>
-                                <th>Showrolipi</th>
-                                <th>Dr. Zerina Bugum</th>
+                                <td>Teacher Id</td>
+                                <td>Feedbacks</td>
                             </tr>
+                        </thead>
+                        <tbody bgcolor="#666666" style="color: black" id="feedbackTableBody">
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="intro-text hidden success" id="academicCalDiv">
-                <div class="text-success">
-                    <table class="table">
-                        <thead>
-                            <tr bgcolor="#ffad33">
+                <div>
+                    <table class="table" id="calendarTableData">
+                        <thead bgcolor="#404040">
+                            <tr>
+                                <td>Course Code</td>
+                                <td>Year</td>
                                 <td>Proposal Date</td>
                                 <td>Midterm Date</td>
                                 <td>Draft Report Submission</td>
@@ -167,21 +178,15 @@
                                 <td>Final Presentation</td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr bgcolor="#ffad33">
-                                <td id="proposalDateCol"></td>
-                                <td id="midtermDateCol"></td>
-                                <td id="draftDateCol"></td>
-                                <td id="finalReportDateCol"></td>
-                                <td id="finalDateCol"></td>
-                            </tr>
-                        </tbody>
+                        <tbody bgcolor="#666666" style="color: black" id="calendarTableBody"></tbody>
                     </table>
                 </div>
+
             </div>
         </div>
 
     </header>
+
 
     <footer>
         <div class="container">
@@ -210,83 +215,7 @@
 
     <!-- Theme JavaScript -->
     <script src="js/agency.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        if (sessionStorage.getItem('accessToken') == null) {
-            window.location.href = "index.html";
-        }
-        $('#homeLink').on('click',
-            function() {
-                $('#headerDiv').removeClass('hidden');
-                $('#homeLinkItem').addClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#academicCalLinkItem').addClass('active');
-                $('#groupsDiv').addClass('hidden');
-                $('#mygroupDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#mygroupLinkItem').removeClass('active');
-            });
-        $('#academicCalLink').on('click',
-            function() {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').removeClass('hidden');
-                $('#academicCalLinkItem').addClass('active');
-                $('#groupsDiv').addClass('hidden');
-                $('#mygroupDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#mygroupLinkItem').removeClass('active');
-            });
-        $('#uploadDocLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').removeClass('hidden');
-                $('#uploadDocLinkItem').addClass('active');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').addClass('hidden');
-                $('#mygroupDiv').addClass('hidden');
-                $('#groupsLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#mygroupLinkItem').removeClass('active');
-            });
-        $('#groupsLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').removeClass('hidden');
-                $('#groupsLinkItem').addClass('active');
-                $('#mygroupDiv').addClass('hidden');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#mygroupLinkItem').removeClass('active');
-            });
-        $('#mygroupLink').on('click',
-            function () {
-                $('#headerDiv').addClass('hidden');
-                $('#homeLinkItem').removeClass('active');
-                $('#uploadDocDiv').addClass('hidden');
-                $('#academicCalDiv').addClass('hidden');
-                $('#groupsDiv').addClass('hidden');
-                $('#mygroupDiv').removeClass('hidden');
-                $('#mygroupLinkItem').addClass('active');
-                $('#uploadDocLinkItem').removeClass('active');
-                $('#academicCalLinkItem').removeClass('active');
-                $('#groupsLinkItem').removeClass('active');
-            });
-        $('#btnLogout').click(function() {
-            sessionStorage.removeItem('accessToken');
-            window.location.href = "index.html";
-        });
-    });
-    </script>
+    <script src="studentPage.js"></script>
 
 </body>
 

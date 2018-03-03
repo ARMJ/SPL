@@ -9,12 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using AuthenticationAPI.Entities;
+using AuthenticationAPI.Infrastructure;
 
 namespace AuthenticationAPI.Controllers
 {
     [RoutePrefix("api/file")]
     public class FileController : ApiController
     {
+        ApplicationDbContext db = new ApplicationDbContext();
         [Route("uploadfile")]
         [HttpPost]
         public async Task<HttpResponseMessage> UploadFile(HttpRequestMessage request)
@@ -25,14 +28,15 @@ namespace AuthenticationAPI.Controllers
             }
 
             var data = await Request.Content.ParseMultipartAsync();
-
-            if (data.Files.ContainsKey("image"))
+            
+            if (data.Files.ContainsKey("document"))
             {
                 long milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                byte[] file = data.Files["image"].File;
-                var fileName = data.Files["image"].Filename;
+                byte[] file = data.Files["document"].File;
+                var fileName = data.Files["document"].Filename;
                 string path = HttpContext.Current.Server.MapPath("~/UploadedFiles/" + milliseconds + "-" + fileName);
                 File.WriteAllBytes(path, file);
+
             }
 
             if (data.Fields.ContainsKey("description"))

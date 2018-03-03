@@ -126,6 +126,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -164,6 +166,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminDashboard.html" />
+    <Content Include="adminPage.js" />
     <Content Include="css\agency.css" />
     <Content Include="css\agency.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -183,11 +187,13 @@
     <Content Include="img\team\2.jpg" />
     <Content Include="img\team\3.jpg" />
     <Content Include="index.html" />
+    <Content Include="indexPage.js" />
     <Content Include="js\agency.js" />
     <Content Include="js\agency.min.js" />
     <Content Include="js\contact_me.js" />
     <Content Include="js\jqBootstrapValidation.js" />
     <Content Include="ManagerDashboard.html" />
+    <Content Include="managerPage.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -198,7 +204,9 @@
     <Content Include="scss\_mixins.scss" />
     <Content Include="scss\_variables.scss" />
     <Content Include="StudentDashboard.html" />
+    <Content Include="studentPage.js" />
     <Content Include="TeacherDashboard.html" />
+    <Content Include="teacherPage.js" />
     <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -262,31 +270,47 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AcademicCalendarsController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CommitteesController.cs" />
+    <Compile Include="Controllers\FeedbacksController.cs" />
     <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\GroupRulesController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Entities\AcademicCalendar.cs" />
+    <Compile Include="Entities\Committee.cs" />
+    <Compile Include="Entities\Document.cs" />
+    <Compile Include="Entities\Feedback.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\GroupRule.cs" />
+    <Compile Include="Entities\Notification.cs" />
+    <Compile Include="Entities\Resubmission.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\Teacher.cs" />
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\ApplicationUser.cs" />
     <Compile Include="Infrastructure\ApplicationUserManager.cs" />
-    <Compile Include="Migrations\201612041837344_InitialCreate.cs" />
-    <Compile Include="Migrations\201612041837344_InitialCreate.Designer.cs">
-      <DependentUpon>201612041837344_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704270431099_InitialCreate1.cs" />
-    <Compile Include="Migrations\201704270431099_InitialCreate1.Designer.cs">
-      <DependentUpon>201704270431099_InitialCreate1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704280313369_InitialCreate2.cs" />
-    <Compile Include="Migrations\201704280313369_InitialCreate2.Designer.cs">
-      <DependentUpon>201704280313369_InitialCreate2.cs</DependentUpon>
+    <Compile Include="Migrations\201709201247121_InitialCreate.cs" />
+    <Compile Include="Migrations\201709201247121_InitialCreate.Designer.cs">
+      <DependentUpon>201709201247121_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\CalendarBindingModel.cs" />
     <Compile Include="Models\ChangePasswordBindingModel.cs" />
+    <Compile Include="Models\CommitteeBindingModel.cs" />
+    <Compile Include="Models\FeedbackBindingModel.cs" />
+    <Compile Include="Models\GroupBindingModel.cs" />
     <Compile Include="Models\ModelFactory.cs" />
+    <Compile Include="Models\NotificationBindingModel.cs" />
     <Compile Include="Models\RoleBindingModels.cs" />
+    <Compile Include="Models\RuleBindingModel.cs" />
+    <Compile Include="Models\StudentBindingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
@@ -297,19 +321,13 @@
     <Compile Include="Validators\CustomUserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612041837344_InitialCreate.resx">
-      <DependentUpon>201612041837344_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704270431099_InitialCreate1.resx">
-      <DependentUpon>201704270431099_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704280313369_InitialCreate2.resx">
-      <DependentUpon>201704280313369_InitialCreate2.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\F1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709201247121_InitialCreate.resx">
+      <DependentUpon>201709201247121_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

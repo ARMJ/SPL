@@ -17,8 +17,19 @@ namespace AuthenticationAPI.Models
         [Display(Name = "Username")]
         public string Username { get; set; }
 
+        [Required]
         [Display(Name = "RoleName")]
         public string RoleName { get; set; }
+
+        [Display(Name = "Designation")]
+        public string Designation { get; set; }
+
+        [Display(Name = "Roll")]
+        public int Roll { get; set; }
+
+        [Display(Name = "Batch")]
+        public int Batch { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

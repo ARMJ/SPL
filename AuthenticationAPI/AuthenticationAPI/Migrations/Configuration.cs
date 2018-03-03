@@ -37,7 +37,6 @@ namespace AuthenticationAPI.Migrations
 
             if (roleManager.Roles.Count() == 0)
             {
-                roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
                 roleManager.Create(new IdentityRole { Name = "Admin" });
                 roleManager.Create(new IdentityRole { Name = "Manager" });
                 roleManager.Create(new IdentityRole { Name = "Teacher" });
@@ -46,7 +45,7 @@ namespace AuthenticationAPI.Migrations
 
             var adminUser = manager.FindByName("AdminUser");
 
-            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+            manager.AddToRoles(adminUser.Id, new string[] { "Admin" });
         }
     }
 }
